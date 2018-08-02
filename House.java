@@ -24,7 +24,10 @@ class House {
 	}
 
 	public String getInfo() {
-		return this.hand.getInfo();
+		String name = this.hand.getHoleCard().getName();
+		String suit = this.hand.getHoleCard().getSuit();
+		return this.hand.getInfo() + name + " of " + suit + "\n" +
+			"Value: " + this.hand.getValue();
 	}
 
 	public HouseHand getHand() {
@@ -57,12 +60,6 @@ class House {
 	}
 
 	public void nextTurn() {
-		if(this.turn == num_players) {
-			this.turn = 0;
-		}
-		else {
-			this.turn++;
-		}
-		
+		this.turn++;		
 	}
 }

@@ -12,7 +12,7 @@ class Player {
 	}
 
 	public String getInfo() {
-		return this.hand.getInfo();
+		return this.hand.getInfo() + "Value: " + this.hand.getValue() + "\n";
 	}
 
 	public Hand getHand() {
