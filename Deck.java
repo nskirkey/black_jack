@@ -19,9 +19,9 @@ class Deck {
 			for(int j = 0; j < 4; j++) {
 				String name = "";
 				switch(i) {
-					case 2: name = "ONE";
+					case 2: name = "TWO";
 							break;
-					case 3: name = "TWO";
+					case 3: name = "THREE";
 							break;
 					case 4: name = "FOUR";
 							break;
@@ -36,7 +36,7 @@ class Deck {
 					case 9: name = "NINE";
 							break;
 					case 10: name = "TEN";
-							break;
+							 break;
 					default: name = "INVALID";
 							break;
 				}
@@ -59,5 +59,9 @@ class Deck {
 	public Card getNextCard() {
 		this.size--;
 		return this.deck.remove();
+	}
+
+	public int getSize() {
+		return this.size;
 	}
 }	

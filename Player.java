@@ -11,13 +11,19 @@ class Player {
 		return this.name;
 	}
 
-	public hold() {
-		// Stub code
-		continue;
+	public String getInfo() {
+		return this.hand.getInfo();
 	}
 
-	public hit() {
-		// Stub code
-		continue;
+	public Hand getHand() {
+		return this.hand;
+	}
+
+	public String lookAtCard() {
+		return this.hand.lookAtCard();
+	}
+
+	public void hit(Card card) {
+		this.hand.receive(card);
 	}
 }

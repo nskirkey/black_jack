@@ -18,7 +18,7 @@ class Hand {
 	}
 
 	public String getInfo() {
-		String info = "Hand:\n";
+		String info = "";
 		for(Card card : hand) {
 			info += card.getName() + " of " + card.getSuit() + "\n";
 		}
@@ -31,5 +31,10 @@ class Hand {
 
 	public int getValue() {
 		return this.value;
+	}
+
+	public String lookAtCard() {
+		Card card = this.hand.get(size - 1);
+		return card.getName() + " of " + card.getSuit();
 	}
 }
