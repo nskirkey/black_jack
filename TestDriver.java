@@ -9,13 +9,23 @@ public class TestDriver {
 		int game_number = 1;
 
 		System.out.println("Welcome to Blackjack, " + player1.getName());
-		while(continueToPlay(sc, game_number)) {
+
+		while(continueToPlay(sc, game_number, player1, house)) {
+			System.out.println("Enter wager:");
+
+			while(!player1.newBet(sc.nextDouble())) {
+				System.out.println("Enter wager:");
+			}
+
 			initialDeal(player1, house, 2);
 			System.out.println("Your initial hand is:\n" + player1.getInfo());
+
 			while(house.getTurn() <= num_players) {
 				int turn_temp = house.getTurn();
+
 				if(house.getTurn() != num_players) {
-					System.out.println("Enter command: hold, hit, or hands");
+					System.out.println("Enter command: hold, hit, hands, wallet, or bet");
+
 					while(turnOver(turn_temp, house) == false) {
 						switch(sc.next()) {
 							case "hold" : 	
@@ -30,12 +40,19 @@ public class TestDriver {
 								System.out.println("Your hand:\n" + player1.getInfo());
 								System.out.println("House hand:\n" + house.getInfo());
 								break;
+							case "wallet" :
+								System.out.println("Wallet contents: " + player1.getWallet());
+								break;
+							case "bet" :
+								System.out.println("Current bet: " + player1.getBet());
+								break;
 							case "default" :
 								System.out.println("Invalid command. Try again.");
 								break;
 						}	
 					}
 				}
+
 				else {
 					switch(house.stayOrHit()) {
 						case 1 : 	house.hit(house.deal());
@@ -48,16 +65,20 @@ public class TestDriver {
 									break;
 					}
 				}
-				System.out.println("Final hands:\n" + player1.getInfo() + "\n" + house.getInfo());
+
+				System.out.println("\nFinal hands:\nYour hand:\n" + player1.getInfo() + "\nHouse hand:\n" + house.getInfo());
 
 				switch(determineWinner(player1, house)) {
 					case 0 : 	System.out.println("You win");
+								player1.winBet(2);
 								break;
 					case 1 :	System.out.println("House wins") ;
+								player1.loseBet();
+								break;
 				}	
 			}
 			game_number++;
-		}	
+		}
 	}
 
 	public static void initialDeal(Player player, House house, int n) {
@@ -84,9 +105,12 @@ public class TestDriver {
 
 	public static int determineWinner(Player player, House house) {
 		int player_score = player.getHand().getValue();
-		int house_score = player.getHand().getValue();
+		int house_score = house.getHand().getValue();
 
-		if(player_score < house_score && player_score <= 21) {
+		if(player_score > house_score && player_score <= 21) {
+			return 0;
+		}
+		else if(player_score <= 21 && house_score > 21) {
 			return 0;
 		}
 		else {
@@ -94,17 +118,21 @@ public class TestDriver {
 		}
 	}
 
-	public static boolean continueToPlay(Scanner sc, int game_number) {
+	public static boolean continueToPlay(Scanner sc, int game_number, Player player, House house) {
+		boolean on_off_switch = true;
 		if(game_number == 1) {
-			return true;
+			return on_off_switch;
 		}
 		System.out.println("Play again? (enter: yes/no)");
-		boolean on_off_switch = true;
 		switch(sc.next().toLowerCase()) {
 			case "yes" : 	on_off_switch = true;
-							
+							break;
 			case "no" : 	on_off_switch = false;
-		}
+							break;
+		}	
+		player.newHand();
+		house.newHand();
+		house.newDeck();
 		return on_off_switch;
 	}
 }

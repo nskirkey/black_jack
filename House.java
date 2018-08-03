@@ -62,4 +62,13 @@ class House {
 	public void nextTurn() {
 		this.turn++;		
 	}
+
+	public void newDeck() {
+		this.deck = new Deck();
+		this.turn = 0;
+	}
+
+	public void newHand(){
+		this.hand = new HouseHand();
+	}
 }
