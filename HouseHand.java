@@ -12,8 +12,8 @@ class HouseHand extends Hand {
 	public Card getHoleCard() {
 		return this.hole_card;
 	}
-	@Override
-	public int getValue() {
-		return super.getValue() + this.hole_card.getValue();
+
+	public int getHoleValue() {
+		return this.hole_card.getValue();
 	}
 }

@@ -20,4 +20,8 @@ class Card {
 	public String getSuit() {
 		return this.suit;
 	}
+
+	public void setValue(int value) {
+		this.value = value
+;	}
 }

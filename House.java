@@ -3,12 +3,14 @@ class House {
 	private HouseHand hand;
 	private int num_players;
 	private int turn;
+	private boolean reveal;
 
 	public House(int num_players) {
 		this.deck = new Deck();
 		this.hand = new HouseHand();
 		this.num_players = num_players;
 		this.turn = 0;
+		this.reveal = false;
 	}
 
 	public Card deal() {
@@ -24,10 +26,16 @@ class House {
 	}
 
 	public String getInfo() {
-		String name = this.hand.getHoleCard().getName();
-		String suit = this.hand.getHoleCard().getSuit();
+		String name = "???";
+		String suit = "???";
+		String value = String.valueOf(this.hand.getValue()) + " + ???";
+		if(this.reveal == true) {
+			name = this.hand.getHoleCard().getName();
+			suit = this.hand.getHoleCard().getSuit();
+			value = String.valueOf(this.hand.getValue() + this.hand.getHoleValue());
+		}
 		return this.hand.getInfo() + name + " of " + suit + "\n" +
-			"Value: " + this.hand.getValue();
+				"Value: " + value;
 	}
 
 	public HouseHand getHand() {
@@ -38,12 +46,12 @@ class House {
 		return this.hand.lookAtCard();
 	}
 
-	public int stayOrHit() {
-		if (this.hand.getValue() < 18) {
-			return 1;
+	public boolean stayOrHit() {
+		if (this.hand.getValue() + this.hand.getHoleValue() < 18) {
+			return true;
 		}
 		else{
-			return 2;
+			return false;
 		}
 	}
 
@@ -51,8 +59,12 @@ class House {
 		this.hand.setHoleCard(card);
 	}
 
-	public Card revealHoleCard() {
-		return this.hand.getHoleCard();
+	public void revealHoleCard() {
+		this.reveal = true;
+	}
+
+	public void concealHoleCard() {
+		this.reveal = false;
 	}
 
 	public int getTurn() {
