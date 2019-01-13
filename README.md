@@ -1,4 +1,4 @@
-# black_jack
+# [black_jack](https://en.wikipedia.org/wiki/Blackjack)
 * Alternative names - Twenty-One
 * Type - Comparing
 * Players - 2+, usually 2–7
