@@ -2,6 +2,8 @@ import java.util.Scanner;
 import javax.swing.*;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.InputMismatchException;
+
 public class TestDriver {
 	public static void main(String[] args) {
 		try {
@@ -15,7 +17,7 @@ public class TestDriver {
 		}
 
 		House house = new House(1);
-		Player player1 = new Player("Big Dicky");
+		Player player1 = new Player("Player 1");
 		Scanner sc = new Scanner(System.in);
 		
 		int num_players = 1;
@@ -27,9 +29,15 @@ public class TestDriver {
 			house.concealHoleCard();
 			System.out.println("Enter wager:");
 
-			while(!player1.newBet(sc.nextDouble())) {
-				System.out.println("Enter wager:");
+			try {
+				while(!player1.newBet(sc.nextDouble())) {
+					System.out.println("Enter wager:");
+				}
 			}
+			catch(InputMismatchException e) {
+				System.out.println(e);
+			}
+
 
 			initialDeal(player1, house, 2);
 			System.out.println("\nYour initial hand is:\n" + player1.getInfo());
@@ -169,15 +177,15 @@ public class TestDriver {
 							player.newHand();
 							house.newHand();
 							house.newDeck();
-							try {
+							/*try {
 								Runtime.getRuntime().exec("cls");
 							}
 							catch(IOException e) {
 								System.out.println(e);
-							}
+							}*/
 							
 
-							/*try {
+							try {
 								cls();
 							}
 							catch(IOException e) {
@@ -185,7 +193,7 @@ public class TestDriver {
 							}
 							catch(InterruptedException e) {
 								System.out.println(e);	
-							}*/
+							}
 							break;
 			case "no" : 	on_off_switch = false;
 							break;
@@ -197,26 +205,4 @@ public class TestDriver {
 	public static void cls() throws IOException, InterruptedException {
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start();
 	}
-
-	/*public static void changeAces(Hand hand, Scanner sc) {
-		LinkedList<Card> aces = hand.aceGet();
-		for(Card ace : aces) {
-			System.out.println("Would you like to change the value of " + ace.getName() + "?");
-			switch(sc.next().toLowerCase()) {
-				case "yes" : 
-					hand.changeAceValue(ace);
-					break;
-				case "default" : 
-					break;
-			}
-		}
-	}*/
-	// This is what you need to do
-	/*public static void changeAces(Hand hand, Scanner sc) {
-		// look for aces in player hand one at a time
-
-		// if ace found prompt for value change
-
-		// change it
-	}*/
 }
