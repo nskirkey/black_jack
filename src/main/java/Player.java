@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 class Player {
 	private String name;
 	private Hand hand;
@@ -65,5 +67,9 @@ class Player {
 
 	public double getBet() {
 		return this.bet;
+	}
+
+	public LinkedList<Card> aceGet() {
+		return this.hand.aceGet();
 	}
 }

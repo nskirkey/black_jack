@@ -2,19 +2,18 @@ import java.util.LinkedList;
 
 class Hand {
 	private LinkedList<Card> hand;
-	private LinkedList<Card> aces;
 	private int size;
-	private int value;
+	/*private int value;*/
 
 	public Hand() {
 		this.hand = new LinkedList<Card>();
 		this.size = 0;
-		this.value = 0;
+	/*this.value = 0;*/
 	}
 
 	public void receive(Card card) {
 		this.hand.add(card);
-		this.value += card.getValue();
+		/*this.value += card.getValue();*/
 		this.size++;		
 	}
 
@@ -31,30 +30,29 @@ class Hand {
 	}
 
 	public int getValue() {
-		return this.value;
+		int sum = 0;
+		for(Card card : hand) {
+			sum += card.getValue();
+		}
+		return sum;
 	}
 
 	public String lookAtCard() {
 		Card card = this.hand.get(size - 1);
 		return card.getName() + " of " + card.getSuit();
 	}
-
-	public LinkedList<Card> getAces() {
-		LinkedList<Card> aces = new LinkedList<Card>();
-		for(Card ace : this.hand) {
-			if(ace.getName().toLowerCase().contains("ace")){
-				aces.add(ace);
-			}
-			else {
-				continue;
+	
+	public LinkedList<Card> aceGet() {
+		LinkedList<Card> acelist = new LinkedList<Card>();
+		for(Card card : hand) {
+			if(card.getName() == "ACE") {
+				acelist.add(card);
 			}
 		}
-		return aces;
-	}
-	
-	public boolean changeAceValue(Card ace) {
-		boolean fulfilled = false;
-		switch(ace.getValue()) {
+
+		return acelist;
+
+		/*switch(ace.getValue()) {
 			case 11 : 
 				ace.setValue(1);
 				fulfilled = true;
@@ -68,6 +66,6 @@ class Hand {
 				fulfilled = false;
 				break;
 		}
-		return fulfilled;
+		return fulfilled;*/
 	}
 }

@@ -38,7 +38,7 @@ public class TestDriver {
 				int turn_temp = house.getTurn();
 
 				if(house.getTurn() != num_players) {
-					System.out.println("Enter command: hold, hit, hands, wallet, or bet");
+					System.out.println("Enter command: hold, hit, hands, wallet, ace, or bet");
 
 					while(turnOver(turn_temp, house) == false) {
 						switch(sc.next().toLowerCase()) {
@@ -65,18 +65,32 @@ public class TestDriver {
 							case "bet" :
 								System.out.println(String.format("\nCurrent bet: $%.2f", player1.getBet()));
 								break;
-							case "switch" :
-								System.out.println("Switching values of aces (1 or 11)");
-								LinkedList<Card> aces = player1.getHand().getAces();
-								int n = aces.size();
-								if(n <= 0) {
+							case "ace" :
+								System.out.println("Switching values of aces");
+								LinkedList<Card> aces = player1.aceGet();
+								if(aces.size() == 0) {
 									System.out.println("No aces in hand");
 									break;
 								}
-								for(Card ace : aces) {
-									System.out.println("Change value of " + ace.getName() + "?");	
+								else {
+									for(Card ace : aces) {
+										System.out.println("Change value of " + ace.getName() + " of " + ace.getSuit()+ "?");
+										switch(sc.next().toLowerCase()) {
+											case "yes" : 
+												if(ace.getValue() == 11) {
+													ace.setValue(1);
+													System.out.println("The value of " + ace.getName() + " of " + ace.getSuit() + " is now 1");
+												}
+												else {
+													ace.setValue(11);
+													System.out.println("The value of " + ace.getName() + " of " + ace.getSuit() + " is now 11");
+												}
+											case "no" :
+												continue;
+										}
+									}
+									break;
 								}
-								break;
 							default :
 								System.out.println("\nInvalid command. Try again.");
 								break;
@@ -184,8 +198,8 @@ public class TestDriver {
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start();
 	}
 
-	public static void changeAces(Hand hand, Scanner sc) {
-		LinkedList<Card> aces = hand.getAces();
+	/*public static void changeAces(Hand hand, Scanner sc) {
+		LinkedList<Card> aces = hand.aceGet();
 		for(Card ace : aces) {
 			System.out.println("Would you like to change the value of " + ace.getName() + "?");
 			switch(sc.next().toLowerCase()) {
@@ -196,5 +210,13 @@ public class TestDriver {
 					break;
 			}
 		}
-	}
+	}*/
+	// This is what you need to do
+	/*public static void changeAces(Hand hand, Scanner sc) {
+		// look for aces in player hand one at a time
+
+		// if ace found prompt for value change
+
+		// change it
+	}*/
 }
